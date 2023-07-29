@@ -3,7 +3,7 @@
 	<div class="events">
 	  <ng-container *ngIf="day && day.events && day.events.length > 0; else noEvents">
 		<div class="event" *ngFor="let event of day.events; let i = index">
-		  {{ event.title }}
+		  <span>{{ event.title }} - {{ event.hour }}</span>
 		  <button class="delete-button" (click)="deleteEvent(i)">Delete</button>
 		</div>
 	  </ng-container>
@@ -16,8 +16,13 @@
 	</div>
   
 	<div class="add-event">
-	  <input [(ngModel)]="newEvent.title" placeholder="Enter Event Title" />
-	  <button class="add-button" (click)="addEvent()">Add Event</button>
+	  <input [(ngModel)]="newEvent.title" placeholder="Enter Event Title" class="event-title-input" />
+	  <input [(ngModel)]="newEvent.hour" type="time" placeholder="Select Event Hour" class="event-hour-input" />
+	</div>
+
+	<div class="button-group">
+		<button class="cancel-button" (click)="cancelEvent()">Cancel</button>
+		<button class="add-button" (click)="addEvent()">Add Event</button>
 	</div>
   </div>
   

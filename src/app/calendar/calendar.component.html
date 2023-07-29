@@ -15,21 +15,15 @@
     <tbody>
 		<tr *ngFor="let week of weeks">
 			<td *ngFor="let day of week">
-				<div (click)="day && showEventDialog(day)">
-					<div>{{ day?.date | date: 'd' }}</div>
+			  <div (click)="day && showEventDialog(day)">
+				<div>{{ day?.date | date: 'd' }}</div>
 				<div *ngIf="day?.events">
-					<div *ngIf="day?.events">
-						<div *ngFor="let event of day?.events?.slice(0, 2)" class="event">
-							{{ event.title }}
-						  </div>
-						  
-					  </div>
-
-					  <div *ngIf="day && day.events && day.events.length > 2" class="event-dots">
-						                  ...
-					  </div>
-					  
-					  
+				  <div *ngFor="let event of day?.events?.slice(0, 2)" class="event">
+					{{ event.title }} - {{ event.hour }}
+				  </div>
+				  <div *ngIf="day && day.events && day.events.length > 2" class="event-dots">
+					...
+				  </div>
 				</div>
 			  </div>
 			</td>

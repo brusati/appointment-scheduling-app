@@ -10,7 +10,9 @@ export interface CalendarDay {
 
 export interface Event {
   title: string;
+  hour: string;
 }
+
 
 @Component({
   selector: 'app-calendar',
