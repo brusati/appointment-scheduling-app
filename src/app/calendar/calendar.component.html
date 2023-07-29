@@ -1,39 +1,36 @@
 <!-- calendar.component.html -->
-<h1>Calendar Scheduler</h1>
-<div class="calendar">
-  <div class="header">
-    <button (click)="prevMonth()">&lt;</button>
-    <h3>{{ currentMonth | date: 'MMMM yyyy' }}</h3>
-    <button (click)="nextMonth()">&gt;</button>
-  </div>
-  <table>
-    <thead>
-      <tr>
-        <th *ngFor="let day of daysOfWeek">{{ day }}</th>
-      </tr>
-    </thead>
-    <tbody>
-		<tr *ngFor="let week of weeks">
-			<td *ngFor="let day of week">
-				<div (click)="day && showEventDialog(day)">
-					<div>{{ day?.date | date: 'd' }}</div>
-				<div *ngIf="day?.events">
-					<div *ngIf="day?.events">
-						<div *ngFor="let event of day?.events?.slice(0, 2)" class="event">
-							{{ event.title }}
-						  </div>
-						  
-					  </div>
+<div class="header">
+	<div class="title">Appointment Scheduling App</div>
+</div>
 
-					  <div *ngIf="day && day.events && day.events.length > 2" class="event-dots">
-						                  ...
-					  </div>
-					  
-					  
-				</div>
-			  </div>
-			</td>
-		  </tr>
-		</tbody>
-	  </table>
+<div class="calendar">
+	<div class="header">
+		<button class="nav-button" (click)="prevMonth()">&lt;</button>
+		<div class="month-year">{{ this.currentMonth | date: 'MMMM yyyy' }}</div>
+		<button class="nav-button" (click)="nextMonth()">&gt;</button>
 	</div>
+	<table>
+		<thead>
+			<tr>
+				<th *ngFor="let day of daysOfWeek">{{ day }}</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let week of weeks">
+				<td *ngFor="let day of week">
+					<div (click)="day && showEventDialog(day)">
+						<div>{{ day?.date | date: 'd' }}</div>
+						<div *ngIf="day?.events">
+							<div *ngFor="let event of day?.events?.slice(0, 2)" class="event">
+								{{ event.title }} - {{ event.hour }}
+							</div>
+							<div *ngIf="day && day.events && day.events.length > 2" class="event-dots">
+								...
+							</div>
+						</div>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

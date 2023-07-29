@@ -10,7 +10,9 @@ export interface CalendarDay {
 
 export interface Event {
   title: string;
+  hour: string;
 }
+
 
 @Component({
   selector: 'app-calendar',
@@ -24,10 +26,9 @@ export class CalendarComponent implements OnInit {
   showDialog: boolean = false;
   selectedDay: CalendarDay | null = null;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.currentMonth = new Date();
     this.generateCalendar();
   }
 
@@ -61,13 +62,14 @@ export class CalendarComponent implements OnInit {
   }
 
   nextMonth(): void {
-    this.currentMonth.setMonth(this.currentMonth.getMonth() + 1);
+    this.currentMonth = new Date(this.currentMonth.getFullYear(), this.currentMonth.getMonth() + 1);
     this.generateCalendar();
   }
 
   prevMonth(): void {
-    this.currentMonth.setMonth(this.currentMonth.getMonth() - 1);
+    this.currentMonth = new Date(this.currentMonth.getFullYear(), this.currentMonth.getMonth() - 1);
     this.generateCalendar();
+    console.log(this.currentMonth)
   }
 
   showEventDialog(day: CalendarDay): void {
@@ -75,8 +77,8 @@ export class CalendarComponent implements OnInit {
     this.showDialog = true;
 
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '400px';    
-    
+    dialogConfig.width = '400px';
+
     dialogConfig.data = this.selectedDay; // You should provide the appropriate `CalendarDay` data here.
 
     this.dialog.open(EventPopupComponent, dialogConfig);
