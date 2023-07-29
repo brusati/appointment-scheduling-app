@@ -1,28 +1,27 @@
 <div class="event-dialog">
 	<h3>{{ day.date | date: 'fullDate' }}</h3>
 	<div class="events">
-	  <ng-container *ngIf="day && day.events && day.events.length > 0; else noEvents">
-		<div class="event" *ngFor="let event of day.events; let i = index">
-		  <span>{{ event.title }} - {{ event.hour }}</span>
-		  <button class="delete-button" (click)="deleteEvent(i)">Delete</button>
-		</div>
-	  </ng-container>
+		<ng-container *ngIf="day && day.events && day.events.length > 0; else noEvents">
+			<div class="event" *ngFor="let event of day.events; let i = index">
+				<span>{{ event.title }} - {{ event.hour }}</span>
+				<button class="delete-button" (click)="deleteEvent(i)">Delete</button>
+			</div>
+		</ng-container>
 	</div>
-  
+
 	<div>
-	  <ng-template #noEvents>
-		<p class="no-events-message">No events scheduled for this day.</p>
-	  </ng-template>
+		<ng-template #noEvents>
+			<p class="no-events-message">No appointments scheduled for this day.</p>
+		</ng-template>
 	</div>
-  
+
 	<div class="add-event">
-	  <input [(ngModel)]="newEvent.title" placeholder="Enter Event Title" class="event-title-input" />
-	  <input [(ngModel)]="newEvent.hour" type="time" placeholder="Select Event Hour" class="event-hour-input" />
+		<input [(ngModel)]="newEvent.title" placeholder="Enter Patient Name" class="event-title-input" />
+		<input [(ngModel)]="newEvent.hour" type="time" placeholder="Select Event Hour" class="event-hour-input" />
 	</div>
 
 	<div class="button-group">
 		<button class="cancel-button" (click)="cancelEvent()">Cancel</button>
-		<button class="add-button" (click)="addEvent()">Add Event</button>
+		<button class="add-button" (click)="addEvent()">Add Appointment</button>
 	</div>
-  </div>
-  
+</div>
