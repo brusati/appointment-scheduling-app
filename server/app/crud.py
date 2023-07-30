@@ -1,13 +1,13 @@
 import datetime
 from typing import List
-
+from dateutil.relativedelta import relativedelta
 from sqlalchemy.orm import Session
 
 from server.app import schemas, models
 
 
 def crear_turno(db: Session, turno: schemas.TurnoCreate) -> models.Turno:
-    db_turno = models.Turno(fecha=turno.fecha_turno, nombre_paciente=turno.nombre_paciente)
+    db_turno = models.Turno(fecha_turno=turno.fecha_turno, nombre_paciente=turno.nombre_paciente)
     db.add(db_turno)
     db.commit()
     db.refresh(db_turno)
@@ -36,10 +36,10 @@ def obtener_turno(db: Session, turno_id: int) -> models.Turno:
 def obtener_turno_fecha(db: Session, fecha: schemas.FiltroFecha) -> List[models.Turno]:
     if fecha.dia is None:
         fecha_begin = datetime.datetime(year=fecha.anio, month=fecha.mes, day=1)
-        fecha_end = datetime.datetime(year=fecha.anio, month=fecha.mes+1, day=1)
+        fecha_end = datetime.datetime(year=fecha.anio, month=fecha.mes, day=1) + relativedelta(months=1)
     else:
         fecha_begin = datetime.datetime(year=fecha.anio, month=fecha.mes, day=fecha.dia)
-        fecha_end = datetime.datetime(year=fecha.anio, month=fecha.mes, day=fecha.dia+1)
+        fecha_end = datetime.datetime(year=fecha.anio, month=fecha.mes, day=fecha.dia) + relativedelta(days=1)
 
     return db.query(models.Turno).filter(
         models.Turno.fecha_turno >= fecha_begin,

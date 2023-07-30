@@ -1,13 +1,24 @@
-from typing import List
+import datetime
+from typing import List, Optional
 
 from fastapi import HTTPException, Depends, FastAPI
 from sqlalchemy.orm import Session
+from starlette.middleware.cors import CORSMiddleware
+
 from server.app import crud, models, schemas
 from .database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # Dependency
@@ -40,10 +51,16 @@ def obtener_turno(
 
 @app.get("/turno_fecha/", response_model=List[schemas.Turno])
 def obtener_turno_fecha(
-    fecha: schemas.FiltroFecha,
+    anio: int,
+    mes:  int,
+    dia: Optional[int] = None,
     db: Session = Depends(get_db)
 ):
-    return crud.obtener_turno_fecha(db, fecha)
+    if anio is None:
+        anio = datetime.datetime.now().year
+    if mes is None:
+        mes = datetime.datetime.now().month
+    return crud.obtener_turno_fecha(db, schemas.FiltroFecha(anio=anio, mes=mes, dia=dia))
 
 
 @app.put("/turno/{turno_id}", response_model=schemas.Turno)
