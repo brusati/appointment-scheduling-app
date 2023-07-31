@@ -7,6 +7,7 @@ from pydantic import BaseModel
 class TurnoBase(BaseModel):
     nombre_paciente: str
     fecha_turno: datetime
+    pago_senia: bool
 
 
 class TurnoCreate(TurnoBase):

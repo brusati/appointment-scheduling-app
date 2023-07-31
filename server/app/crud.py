@@ -1,13 +1,25 @@
 import datetime
 from typing import List
 from dateutil.relativedelta import relativedelta
+from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 from server.app import schemas, models
 
 
 def crear_turno(db: Session, turno: schemas.TurnoCreate) -> models.Turno:
-    db_turno = models.Turno(fecha_turno=turno.fecha_turno, nombre_paciente=turno.nombre_paciente)
+    if turno.nombre_paciente.lower() == "laura":  # VIP, no requiere cobrar seña
+        pass
+    elif turno.nombre_paciente.lower() == "juan":  # BLACKLIST, no le doy turno
+        raise HTTPException(status_code=422, detail="Cliente en blacklist")
+    else:
+        if not turno.pago_senia:
+            raise HTTPException(status_code=422, detail="Cliente necesita pagar seña")
+    db_turno = models.Turno(
+        fecha_turno=turno.fecha_turno,
+        nombre_paciente=turno.nombre_paciente,
+        pago_senia=turno.pago_senia
+    )
     db.add(db_turno)
     db.commit()
     db.refresh(db_turno)
@@ -24,6 +36,7 @@ def modificar_turno(db: Session, turno_id: int, turno: schemas.TurnoCreate) -> m
     db_turno = obtener_turno(db, turno_id)
     db_turno.fecha_turno = turno.fecha_turno
     db_turno.nombre_paciente = turno.nombre_paciente
+    db_turno.pago_senia = turno.pago_senia
     db.commit()
     db.refresh(db_turno)
     return db_turno

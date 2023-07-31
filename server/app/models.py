@@ -11,3 +11,4 @@ class Turno(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     nombre_paciente = Column(String)
     fecha_turno = Column(DateTime)
+    pago_senia = Column(Boolean)
