@@ -10,6 +10,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { EventPopupComponent } from './event-popup/event-popup.component';
 import { HttpClientModule } from '@angular/common/http';
 import { TimezoneFormatPipe } from './timezone-format.pipe';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+
 
 @NgModule({
   declarations: [
@@ -24,7 +26,8 @@ import { TimezoneFormatPipe } from './timezone-format.pipe';
     FormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
-    HttpClientModule
+    HttpClientModule,
+    MatSnackBarModule, 
   ],
   providers: [],
   bootstrap: [AppComponent]

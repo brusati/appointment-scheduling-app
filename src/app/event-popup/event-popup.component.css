@@ -101,3 +101,34 @@ h3 {
 .add-button:hover {
 	background-color: #42a5f5;
 }
+
+.add-event {
+	display: flex;
+	flex-direction: column;
+}
+
+.input-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.event-title-input {
+	width: 100%;
+	margin-right: 10px;
+}
+
+.event-hour-input {
+	width: 100%;
+}
+
+.checkbox-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-top: 10px;
+}
+
+label {
+	margin-right: 10px;
+}
