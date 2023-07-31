@@ -13,8 +13,6 @@ export interface CalendarEvent {
   nombre_paciente: string;
   fecha_turno: string;
   id: number | null;
-  hour: string | null;
-  minute: string | null;
 }
 
 
@@ -56,23 +54,14 @@ export class CalendarComponent implements OnInit {
       queryParams = queryParams.append("anio", date.getFullYear().toString());
       queryParams = queryParams.append("mes", (date.getMonth() + 1).toString());
       queryParams = queryParams.append("dia", date.getDate().toString());
-
+      
       this.http.get<CalendarEvent[]>(`http://127.0.0.1:8000/turno_fecha`, { params: queryParams }).subscribe((response: CalendarEvent[]) => {
         response.forEach((event: CalendarEvent | null) => {
-          if (event != null) {
-            const dateObj = new Date(event?.fecha_turno);
-
-            event['hour'] = (dateObj.getHours() - 3).toString();
-            event['minute'] = dateObj.getMinutes().toString();
-          }
-
           if (calendarDay.events === undefined) {
             calendarDay.events = [event];
           } else {
             calendarDay.events.push(event);
           }
-
-          this.sortEventsByHour(calendarDay.events);
         });
       });
 
@@ -109,7 +98,7 @@ export class CalendarComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.width = '400px';
 
-    dialogConfig.data = this.selectedDay;
+    dialogConfig.data = this.selectedDay; // You should provide the appropriate `CalendarDay` data here.
 
     this.dialog.open(EventPopupComponent, dialogConfig);
   }
@@ -117,22 +106,5 @@ export class CalendarComponent implements OnInit {
   closeEventDialog(): void {
     this.showDialog = false;
     this.selectedDay = null;
-  }
-
-  private sortEventsByHour(events: any[] | undefined): void {
-    if (events !== undefined) {
-      events.sort((a, b) => {
-        if (a && a.hour && b && b.hour) {
-          const [aHours, aMinutes] = a.hour.split(':').map(Number);
-          const [bHours, bMinutes] = b.hour.split(':').map(Number);
-  
-          if (aHours !== bHours) {
-            return aHours - bHours;
-          }
-          return aMinutes - bMinutes;
-        }
-        return 0;
-      });
-    }
   }
 }

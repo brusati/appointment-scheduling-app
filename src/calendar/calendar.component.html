@@ -22,7 +22,7 @@
 						<div>{{ day?.date | date: 'd' }}</div>
 						<div *ngIf="day?.events">
 							<div *ngFor="let event of day?.events?.slice(0, 2)" class="event">
-								{{ event?.nombre_paciente }} - {{ event?.hour }}:{{ event?.minute }}
+								{{ event?.nombre_paciente }} - {{ event?.fecha_turno }}
 							</div>
 							<div *ngIf="day && day.events && day.events.length > 2" class="event-dots">
 								...

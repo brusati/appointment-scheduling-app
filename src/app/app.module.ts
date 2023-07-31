@@ -8,12 +8,15 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EventPopupComponent } from './event-popup/event-popup.component';
+import { HttpClientModule } from '@angular/common/http';
+import { TimezoneFormatPipe } from './timezone-format.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalendarComponent,
-    EventPopupComponent
+    EventPopupComponent,
+    TimezoneFormatPipe
   ],
   imports: [
     BrowserModule,
@@ -21,6 +24,7 @@ import { EventPopupComponent } from './event-popup/event-popup.component';
     FormsModule,
     BrowserAnimationsModule,
     MatDialogModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,7 +3,7 @@
 	<div class="events">
 		<ng-container *ngIf="day && day.events && day.events.length > 0; else noEvents">
 			<div class="event" *ngFor="let event of day.events; let i = index">
-				<span>{{ event?.nombre_paciente }} - {{ event?.hour }}:{{ event?.minute }}</span>
+				<span>{{ event?.nombre_paciente }} - {{ event?.fecha_turno }}</span>
 				<button class="delete-button" (click)="deleteEvent(i)">Delete</button>
 			</div>
 		</ng-container>
@@ -17,11 +17,7 @@
 
 	<div class="add-event">
 		<input [(ngModel)]="nombre_paciente" placeholder="Enter Patient Name" class="event-title-input" />
-		<input [(ngModel)]="hora" 
-       type="time" 
-       placeholder="Select Event Hour" 
-       class="event-hour-input"
-       (ngModelChange)="formatTimeToISO()" />
+		<input [(ngModel)]="hora" type="time" placeholder="Select Event Hour" class="event-hour-input" />
 	</div>
 
 	<div class="button-group">
